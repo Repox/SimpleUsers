@@ -1,8 +1,8 @@
 <?php
 
 	/**
-   * This file is part of SimpleUsers.
-   *
+	 * This file is part of SimpleUsers.
+	 *
 	 */
 
 	/**
