@@ -1,0 +1,534 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title></title>
+	  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	  <style type="text/css">
+
+			* {	margin: 0px; padding: 0px; }
+			body
+			{
+				padding: 30px;
+				font-family: Calibri, Verdana, "Sans Serif";
+				font-size: 12px;
+			}
+			table
+			{
+				width: 800px;
+				margin: 0px auto;
+			}
+
+			th, td
+			{
+				padding: 3px;
+			}
+
+			.right
+			{
+				text-align: right;
+			}
+
+	  	h1
+	  	{
+	  		color: #FF0000;
+	  		border-bottom: 2px solid #000000;
+	  		margin-bottom: 15px;
+	  	}
+
+	  	p { margin: 10px 0px; }
+	  	p.faded { color: #505050; }
+
+	  	ul
+	  	{
+	  		margin: 20px;
+	  	}
+
+	  </style>
+	</head>
+	<body>
+
+		<h1>SimpleUsers Method and Member reference</h1>
+
+		<h2>Index</h2>
+		<ul>
+			<li><a href="#construct">SimpleUsers::__construct()</a></li>
+			<li><a href="#createUser">SimpleUsers::createUser( string $username, string $password )</a></li>
+			<li><a href="#loginUser">SimpleUsers::loginUser( string $username, string $password )</a></li>
+			<li><a href="#setInfo">SimpleUsers::setInfo( string $key, string $value [, int $userId] )</a></li>
+			<li><a href="#getInfo">SimpleUsers::getInfo( string $key [, int $userId] )</a></li>
+			<li><a href="#getInfoArray">SimpleUsers::getInfoArray( [int $userId] )</a></li>
+			<li><a href="#logoutUser">SimpleUsers::logoutUser()</a></li>
+			<li><a href="#setPassword">SimpleUsers::setPassword( string $password [, int $userId] )</a></li>
+			<li><a href="#getUsers">SimpleUsers::getUsers()</a></li>
+			<li><a href="#getSingleUser">SimpleUsers::getSingleUser( [int $userId] )</a></li>
+			<li><a href="#deleteUser">SimpleUsers::deleteUser( int $userId )</a></li>
+			<li><a href="#logged_in">SimpleUsers::logged_in</a></li>
+			<li><a href="#userdata">SimpleUsers::userdata</a></li>
+		</ul>
+
+		<h2>Methods</h2>
+		<p id="construct">
+			<strong>SimpleUsers::__construct()</strong>
+		</p>
+		<p class="faded">
+			Object construct verifies that a session has been started and that a MySQL connection can be established.<br />
+			It takes no parameters.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code>
+						<span style="color: #0000BB">&lt;?php<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();<br /></span><span style="color: #0000BB">?&gt;<br /></span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p id="createUser">
+			<strong>SimpleUsers::createUser( string $username, string $password )</strong>
+		</p>
+		<p class="faded">
+			Returns a (int)user id, if the user was created succesfully.
+			If not, it returns (bool)false.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$res&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">createUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"John"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"qwerty"</span><span style="color: #007700">);
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span><span style="color: #0000BB">$res&nbsp;</span><span style="color: #007700">)
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"User&nbsp;was&nbsp;created&nbsp;with&nbsp;userId:&nbsp;"</span><span style="color: #007700">.</span><span style="color: #0000BB">$res</span><span style="color: #007700">;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;else
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;username&nbsp;was&nbsp;already&nbsp;taken."</span><span style="color: #007700">;
+					<br />
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+
+		<p id="loginUser">
+			<strong>SimpleUsers::loginUser( string $username, string $password )</strong>
+		</p>
+		<p class="faded">
+		Pairs up username and password as registrered in the database.<br />
+		If the username and password is correct, it will return (int)user id of
+		the user which credentials has been passed and set the session, for
+		use by the user validating.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$res&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">loginUser</span><span style="color: #007700">(</span><span style="color: #DD0000">"John"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"qwerty"</span><span style="color: #007700">);
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span><span style="color: #0000BB">$res&nbsp;</span><span style="color: #007700">)
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">"Location:&nbsp;..."</span><span style="color: #007700">);
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;else
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"You&nbsp;passed&nbsp;the&nbsp;wrong&nbsp;credentials."</span><span style="color: #007700">;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+					<br />
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+				</fieldset>
+		</p>
+
+		<p id="setInfo">
+			<strong>SimpleUsers::setInfo( string $key, string $value [, int $userId] )</strong>
+		</p>
+		<p class="faded">
+			Sets a custom information pair, consisting of a key name and that keys value for a user.
+			Setting the third parameter sets the provided information for a given user, instead of the one calling it.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example #1</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Store&nbsp;information&nbsp;for&nbsp;the&nbsp;current&nbsp;user
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setInfo</span><span style="color: #007700">(</span><span style="color: #DD0000">"fullname"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"John&nbsp;Doe"</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+				</fieldset>
+		</p>
+
+		<p>
+			<fieldset>
+				<legend>Example #2</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Store&nbsp;information&nbsp;for&nbsp;the&nbsp;user&nbsp;with&nbsp;userId&nbsp;provided&nbsp;in&nbsp;the&nbsp;third&nbsp;parameter.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;useful&nbsp;for&nbsp;administrators&nbsp;when&nbsp;wanting&nbsp;to&nbsp;assign,&nbsp;edit&nbsp;or&nbsp;empty&nbsp;stored&nbsp;information&nbsp;about&nbsp;a&nbsp;user
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setInfo</span><span style="color: #007700">(</span><span style="color: #DD0000">"fullname"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"John&nbsp;Doe"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p id="getInfo">
+			<strong>SimpleUsers::getInfo( string $key [, int $userId] )</strong>
+		</p>
+		<p class="faded">
+			Use this function to retrieve stored custom user information.<br />
+			Setting the third parameter gets the stored information for a given user, instead of the one calling it.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example #1</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Get&nbsp;stored&nbsp;information&nbsp;for&nbsp;the&nbsp;active&nbsp;user
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$fullname&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInfo</span><span style="color: #007700">(</span><span style="color: #DD0000">"fullname"</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p>
+			<fieldset>
+				<legend>Example #2</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Get&nbsp;stored&nbsp;information&nbsp;for&nbsp;the&nbsp;user&nbsp;with&nbsp;userId&nbsp;provided&nbsp;in&nbsp;the&nbsp;third&nbsp;parameter.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;useful&nbsp;for&nbsp;administrators&nbsp;when&nbsp;wanting&nbsp;to&nbsp;retrieve&nbsp;stored&nbsp;information&nbsp;about&nbsp;a&nbsp;user
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$fullname&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInfo</span><span style="color: #007700">(</span><span style="color: #DD0000">"fullname"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+
+		<p id="getInfoArray">
+			<strong>SimpleUsers::getInfoArray( [int $userId] )</strong>
+		</p>
+		<p class="faded">
+			Returns an associative array with all the custom information stored about the current user.<br />
+			Passing a userId as a parameter will return an associative array with all the custom information for that specific user.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example #1</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Gets&nbsp;all&nbsp;stored&nbsp;information&nbsp;for&nbsp;the&nbsp;active&nbsp;user&nbsp;and&nbsp;returns&nbsp;an&nbsp;associative&nbsp;array
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$info&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInfoArray</span><span style="color: #007700">();
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$info</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p>
+			<fieldset>
+				<legend>Example #2</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Gets&nbsp;all&nbsp;stored&nbsp;information&nbsp;for&nbsp;a&nbsp;given&nbsp;user&nbsp;and&nbsp;returns&nbsp;an&nbsp;associative&nbsp;array
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;useful&nbsp;for&nbsp;administrators&nbsp;when&nbsp;wanting&nbsp;to&nbsp;get&nbsp;all&nbsp;stored&nbsp;information&nbsp;about&nbsp;a&nbsp;user&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$info&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getInfoArray</span><span style="color: #007700">(</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$info</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p id="logoutUser">
+			<strong>SimpleUsers::logoutUser()</strong>
+		</p>
+		<p class="faded">
+			Logout the active user, unsetting the users session.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">logoutUser</span><span style="color: #007700">();
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p id="setPassword">
+			<strong>SimpleUsers::setPassword( string $password [, int $userId] )</strong>
+		</p>
+		<p class="faded">
+			Update the users password with this function.<br />
+			It generates a new salt and a sets the users password provided by the first parameter.<br />
+			Providing a userId in the second paramater will set the password for that specific user.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example #1</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Sets&nbsp;a&nbsp;new&nbsp;password&nbsp;for&nbsp;the&nbsp;current&nbsp;active&nbsp;user
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setPassword</span><span style="color: #007700">(</span><span style="color: #DD0000">"difficult"</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p>
+			<fieldset>
+				<legend>Example #2</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Sets&nbsp;a&nbsp;new&nbsp;password&nbsp;for&nbsp;the&nbsp;userId&nbsp;identified&nbsp;by&nbsp;the&nbsp;second&nbsp;parameter.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;useful&nbsp;if&nbsp;an&nbsp;administrative&nbsp;action&nbsp;is&nbsp;needed&nbsp;for&nbsp;setting&nbsp;a&nbsp;new&nbsp;password.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">setPassword</span><span style="color: #007700">(</span><span style="color: #DD0000">"difficult"</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+
+		<p id="getUsers">
+			<strong>SimpleUsers::getUsers()</strong>
+		</p>
+		<p class="faded">
+			Gives you an array with all registered users and their basic information (last activity, creation date, username and userId)
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$users&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$users</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+
+		<p id="getSingleUser">
+			<strong>SimpleUsers::getSingleUser( [int $userId] )</strong>
+		</p>
+		<p class="faded">
+			Gives you an associative array, containing the basic information (last activity, creation date, username and userId) for the current active user.<br />
+			If a userId is provided as parameter, the returned associative array will contain the basic information for that specific user.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example #1</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getSingleUser</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p>
+			<fieldset>
+				<legend>Example #2</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Retrieving&nbsp;the&nbsp;basic&nbsp;information&nbsp;for&nbsp;a&nbsp;specific&nbsp;user.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;This&nbsp;is&nbsp;useful&nbsp;for&nbsp;administrative&nbsp;purposes.
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$user&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getSingleUser</span><span style="color: #007700">(</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">print_r</span><span style="color: #007700">(</span><span style="color: #0000BB">$user</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+
+		<p id="deleteUser">
+			<strong>SimpleUsers::deleteUser( int $userId )</strong>
+		</p>
+		<p class="faded">
+			Deletes a given user and stored custom information with it.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">deleteUser</span><span style="color: #007700">(</span><span style="color: #0000BB">354</span><span style="color: #007700">);
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+		
+		<p id="getToken">
+			<strong>SimpleUsers::getToken( [bool] )</strong>
+		</p>
+		<p class="faded">
+			Returns a hidden input field with a unique token value for CSRF to be used with post data.<br />
+			The token is saved in a session for later validation.<br />
+			The boolean parameter is default set to true which returns the input field as XHTML - provide (bool) false for HTML 4 compliance.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();&nbsp;
+					<br /></span><span style="color: #0000BB">?&gt;
+					<br /></span>&lt;form&nbsp;method="post"&nbsp;action="..."&gt;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&lt;input&nbsp;...&gt;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #0000BB">&lt;?php&nbsp;</span><span style="color: #007700">echo&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">getToken</span><span style="color: #007700">();&nbsp;</span><span style="color: #0000BB">?&gt;
+					<br /></span>&lt;/form&gt;
+					<br /></span>
+					</code>
+			</fieldset>
+		</p>		
+		
+		<p id="getToken">
+			<strong>SimpleUsers::validateToken()</strong>
+		</p>
+		<p class="faded">
+			Use this method when you wish to validate the CSRF token from your post data.<br />
+			The method returns true upon validation, otherwise false.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">$csrf&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">validateToken</span><span style="color: #007700">();
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;if(!</span><span style="color: #0000BB">$csrf</span><span style="color: #007700">)
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;{
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">header</span><span style="color: #007700">(</span><span style="color: #DD0000">"Location:&nbsp;request_denied.php"</span><span style="color: #007700">);
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;}
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #FF8000">//&nbsp;Otherwise,&nbsp;continue&nbsp;with&nbsp;processing
+					<br />
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>				
+
+		<h2>Members</h2>
+
+		<p id="logged_in">
+			<strong>SimpleUsers::logged_in</strong>
+		</p>
+		<p class="faded">
+			This tells wether a user is logged in or not.<br />
+			Value is (bool)true or (bool)false.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">logged_in&nbsp;</span><span style="color: #007700">)
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"You&nbsp;are&nbsp;logged&nbsp;in"</span><span style="color: #007700">;
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;else
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"You&nbsp;are&nbsp;NOT&nbsp;logged&nbsp;in!"</span><span style="color: #007700">;
+					<br /></span><span style="color: #0000BB">?&gt;</span>
+					</span>
+					</code>
+			</fieldset>
+		</p>
+		
+
+		<p id="userdata">
+			<strong>SimpleUsers::userdata</strong>
+		</p>
+		<p class="faded">
+			This is auto-populated array containing the information stored for the logged in user.<br />
+			If no user is logged in, this member consists of an empty array.
+		</p>
+		<p>
+			<fieldset>
+				<legend>Example</legend>
+					<code><span style="color: #000000">
+					<span style="color: #0000BB">&lt;?php
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;$SimpleUsers&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">SimpleUsers</span><span style="color: #007700">();
+					<br />
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">logged_in&nbsp;</span><span style="color: #007700">)
+					<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"Hello&nbsp;"&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">userdata</span><span style="color: #007700">[</span><span style="color: #DD0000">"uUsername"</span><span style="color: #007700">]&nbsp;.&nbsp;</span><span style="color: #DD0000">"&nbsp;-&nbsp;your&nbsp;last&nbsp;activity&nbsp;was&nbsp;at&nbsp;"&nbsp;</span><span style="color: #007700">.&nbsp;</span><span style="color: #0000BB">$SimpleUsers</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">userdata</span><span style="color: #007700">[</span><span style="color: #DD0000">"uActivity"</span><span style="color: #007700">];
+					<br />
+					<br /></span><span style="color: #0000BB">?&gt;</span>&nbsp;</span>
+					</code>
+			</fieldset>
+		</p>		
+
+
+	</body>
+</html>
