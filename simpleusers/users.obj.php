@@ -84,7 +84,7 @@
 
 			$this->stmt->bind_param("ss", $username, $password);
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			if( $this->stmt->num_rows == 0)
 				return false;
@@ -171,7 +171,7 @@
 
 			$this->stmt->bind_param("is", $userId, $key);
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			if( $this->stmt->num_rows == 0)
 				return "";
@@ -236,7 +236,7 @@
 
 			$this->stmt->bind_param("i", $userId);
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			$userInfo = array();
 			if( $this->stmt->num_rows > 0)
@@ -306,7 +306,7 @@
 				throw new Exception("MySQL Prepare statement failed: ".$this->mysqli->error);
 
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			if( $this->stmt->num_rows == 0)
 				return array();
@@ -349,7 +349,7 @@
 
 			$this->stmt->bind_param("i", $userId);
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			if( $this->stmt->num_rows == 0)
 				return false;
@@ -491,7 +491,7 @@
 
 			$this->stmt->bind_param("i", $userId);
 			$this->stmt->execute();
-      $this->stmt->store_result();
+			$this->stmt->store_result();
 
 			if( $this->stmt->num_rows == 1)
 				return true;
