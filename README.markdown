@@ -39,15 +39,15 @@ Sample files are included with this package
 
 The following files are simply sample files and should not be used as useradministration `as is`.
 The sample files are only for reference and learning purposes, so you can build SimpleUsers into your own application.
- - users.php - A simple administration interface to manage registered users (login required).
- - userinfo.php - A simple administration interface to manage registered data to a specific user (login required).</li>
- - removeinfo.php - A simple example of how to permanently remove specific data registered to a specific user (login required)</li>
- - deleteuser.php - A simple example of how to delete users (login required).
- - changepassword.php - A simple example of how to change a users password (login required).
- - logout.php - A simple example of how to log out a user.
- - login.php - A simple example of how to log in a user.
- - newuser.php - A simple example of how to create a new user.
- - csrf.php - A simple example of how to use and implement CSRF protection.
+- users.php - A simple administration interface to manage registered users (login required).
+- userinfo.php - A simple administration interface to manage registered data to a specific user (login required).</li>
+- removeinfo.php - A simple example of how to permanently remove specific data registered to a specific user (login required)</li>
+- deleteuser.php - A simple example of how to delete users (login required).
+- changepassword.php - A simple example of how to change a users password (login required).
+- logout.php - A simple example of how to log out a user.
+- login.php - A simple example of how to log in a user.
+- newuser.php - A simple example of how to create a new user.
+- csrf.php - A simple example of how to use and implement CSRF protection.
 		
 Not all the methods available in SimpleUsers is covered in these files.
 A full reference can be found in reference.html.
