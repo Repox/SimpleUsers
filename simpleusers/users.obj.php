@@ -417,6 +417,26 @@
 			
 			return $string;
 		}		
+		
+		/**
+		* Use this method when you wish to validate the CSRF token from your post data.
+		* The method returns true upon validation, otherwise false. 
+		*
+		* @return bool true or false
+		*/
+		
+		public function validateToken()
+		{
+			$name = $_SESSION[$this->sessionName]["csrf_name"];
+			$token = $_SESSION[$this->sessionName]["csrf_token"];
+			unset($_SESSION[$this->sessionName]["csrf_token"]);
+			unset($_SESSION[$this->sessionName]["csrf_name"]);
+			
+			if($_POST[$name] == $token)
+				return true;
+				
+			return false;
+		}		
 
 		/**
 		* This function updates the users last activity time
