@@ -1,9 +1,9 @@
 <?php
 
 	/**
-	* Make sure you started your'e sessions!
+	* Make sure you started your sessions!
 	* You need to include su.inc.php to make SimpleUsers Work
-	* After that, create an instance of SimpleUsers and your'e all set!
+	* After that, create an instance of SimpleUsers and you're all set!
 	*/
 
 	session_start();
