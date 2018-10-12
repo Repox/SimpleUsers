@@ -1,6 +1,9 @@
-SimpleUsers v0.1
+SimpleUsers v2.0
 
-SimpleUsers needs PHP 5, MySQL (no special version needed) and the MySQL Improved extension (http://php.net/mysqli).
+WARNING:
+This is a simple user management script that is currently only available because it's in use some places. If possible, find other solutions for your user management handling.
+
+SimpleUsers needs PHP 5.5, MySQL (no special version needed) and the MySQL Improved extension (http://php.net/mysqli).
 
 SKILLS
 Basic knowledge of PHP is required. Assuming that you know basic PHP, you most likely do know your way around HTML.

@@ -32,14 +32,31 @@
 
 	if( isset($_POST["newkey"]) )
 	{
-		if( strlen($_POST["newkey"]) > 0 )
-			$SimpleUsers->setInfo($_POST["newkey"], $_POST["newvalue"], $userId);
-		
+		if( strlen($_POST["newkey"]) > 0 ) {
+
+		    try {
+                $SimpleUsers->setInfo($_POST["newkey"], $_POST["newvalue"], $userId);
+            }
+            catch (Exception $e) {
+		        // Ignore errors for this demo purpose
+            }
+
+
+        }
 		if( isset($_POST["userInfo"]) )
 		{
-	    	foreach($_POST["userInfo"] as $pKey => $pValue)
-					$SimpleUsers->setInfo($pKey, $pValue, $userId);
-		} 
+
+            foreach ($_POST["userInfo"] as $pKey => $pValue) {
+                try {
+                    $SimpleUsers->setInfo($pKey, $pValue, $userId);
+                }
+                catch (Exception $e) {
+                    // Ignore errors for this demo purpose
+                }
+
+            }
+
+        }
 
 		header("Location: users.php");
 		exit;
